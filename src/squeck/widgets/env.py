@@ -117,11 +117,23 @@ class EnvWidget(Widget):  # type: ignore
         else:
             dm_hostname_text = Text("Undefined", style=_VALUE_ERROR_STYLE)
 
+        # 7 Lines minimum
+        table_height: int = 7
         table.add_row("Auth", kc_host)
-        table.add_row("AS", as_hostname_text)
-        table.add_row("v", as_api_version_value)
-        table.add_row("DM", dm_hostname_text)
-        table.add_row("v", dm_api_version_value)
+        # Add an AS hostname if it's been defined
+        if as_hostname:
+            table.add_row("AS", as_hostname_text)
+            table.add_row("v", as_api_version_value)
+        else:
+            table.add_row("AS", "-")
+            table.add_row("V", "-")
+        # Add a DM hostname if it's been defined
+        if dm_hostname:
+            table.add_row("DM", dm_hostname_text)
+            table.add_row("v", dm_api_version_value)
+        else:
+            table.add_row("AS", "-")
+            table.add_row("V", "-")
 
         return Panel(
             table,
@@ -130,5 +142,5 @@ class EnvWidget(Widget):  # type: ignore
             box=box.ASCII,
             style=self.panel_style,
             padding=0,
-            height=7,
+            height=table_height,
         )

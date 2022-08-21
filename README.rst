@@ -13,6 +13,7 @@ text-based user interface modelled on the popular `k9s`_ Kubernetes monitor.
 
 .. _k9s: https://k9scli.io
 .. _squonk2-python-client: https://github.com/InformaticsMatters/squonk2-python-client
+.. _textual: https://github.com/Textualize/textual
 
 ************
 Installation

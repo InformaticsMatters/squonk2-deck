@@ -18,7 +18,9 @@ from squeck.access_token import AccessToken
 
 _KEY_STYLE: Style = Style(color="orange_red1", bold=True)
 _KEY_VALUE_STYLE: Style = Style(color="bright_white")
-_VALUE_ERROR_STYLE: Style = Style(color="bright_red", italic=True)
+_VALUE_ERROR_STYLE: Style = Style(
+    color="bright_yellow", bgcolor="bright_red", bold=True
+)
 
 
 class EnvWidget(Widget):  # type: ignore
@@ -64,7 +66,7 @@ class EnvWidget(Widget):  # type: ignore
         )
 
         # Get the version of the DM API and the AS API
-        as_api_version: str = "Not available"
+        as_api_version: str = "- NO RESPONSE -"
         as_api_version_style: Style = _VALUE_ERROR_STYLE
         if self.as_api:
             as_ret_val: AsApiRv = self.as_api.get_version()
@@ -73,7 +75,7 @@ class EnvWidget(Widget):  # type: ignore
                 as_api_version_style = _KEY_VALUE_STYLE
         as_api_version_value: Text = Text(as_api_version, style=as_api_version_style)
 
-        dm_api_version: str = "Not available"
+        dm_api_version: str = "- NO RESPONSE -"
         dm_api_version_style: Style = _VALUE_ERROR_STYLE
         if self.dm_api:
             dm_ret_val: DmApiRv = self.dm_api.get_version()

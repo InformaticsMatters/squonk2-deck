@@ -1,0 +1,11 @@
+.mypy_cache/
+.pytest_cache/
+.idea/
+venv/
+dist/
+build/
+src/im_squeck.egg-info/
+**/*.log
+**/*.pyc
+**/.DS_Store
+.coverage

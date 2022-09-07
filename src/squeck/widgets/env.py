@@ -58,12 +58,24 @@ class EnvWidget(Widget):  # type: ignore
 
         # Set the URL for this environment.
         # Get access tokens (using anything we have)
-        self.as_access_token = AccessToken.get_as_access_token(
-            self.environment, prior_token=self.as_access_token
-        )
-        self.dm_access_token = AccessToken.get_dm_access_token(
-            self.environment, prior_token=self.dm_access_token
-        )
+        self.as_access_token = None
+        try:
+            self.as_access_token = AccessToken.get_as_access_token(
+                self.environment, prior_token=self.as_access_token
+            )
+        except KeyboardInterrupt as k_i:
+            raise k_i
+        except:  # pylint: disable=bare-except
+            pass
+        self.dm_access_token = None
+        try:
+            self.dm_access_token = AccessToken.get_dm_access_token(
+                self.environment, prior_token=self.dm_access_token
+            )
+        except KeyboardInterrupt as k_i:
+            raise k_i
+        except:  # pylint: disable=bare-except
+            pass
 
         # Get the version of the DM API and the AS API
         as_api_version: str = "- NO RESPONSE -"

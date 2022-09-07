@@ -26,6 +26,7 @@ class AccessToken:
             username=env.admin_user(),
             password=env.admin_password(),
             prior_token=prior_token,
+            timeout_s=0.1,
         )
         return access_token
 

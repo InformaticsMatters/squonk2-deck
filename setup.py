@@ -2,7 +2,7 @@
 
 # Setup module for Squeck
 #
-# August 2022
+# September 2022
 
 import os
 import setuptools
@@ -20,7 +20,7 @@ setuptools.setup(
     version=os.environ.get("GITHUB_REF_SLUG", "1.0.0"),
     author="Alan Christie",
     author_email="achristie@informaticsmatters.com",
-    url="https://github.com/informaticsmatters/squonk2-dock",
+    url="https://github.com/informaticsmatters/squonk2-deck",
     license="MIT",
     description="The IM Squonk2 Deck (Squeck)",
     long_description=long_description,

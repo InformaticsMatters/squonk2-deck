@@ -8,8 +8,8 @@ from typing import Optional
 from rich.style import Style
 from textual.app import App
 from textual.widgets import Header
+from squonk2.environment import Environment
 
-from squeck.environment import Environment
 from squeck.widgets.env import EnvWidget
 
 # Users set SQUONK2_LOGFILE to enable logging

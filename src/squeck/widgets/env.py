@@ -11,9 +11,9 @@ from rich import box
 from textual.widget import Widget
 from squonk2.dm_api import DmApi, DmApiRv
 from squonk2.as_api import AsApi, AsApiRv
+from squonk2.environment import Environment
 
 from squeck import common
-from squeck.environment import Environment
 from squeck.access_token import AccessToken
 
 _KEY_STYLE: Style = Style(color="orange_red1", bold=True)

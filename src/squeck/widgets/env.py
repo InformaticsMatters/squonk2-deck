@@ -106,9 +106,7 @@ class EnvWidget(Widget):  # type: ignore
         table.add_column("Value", style=_KEY_VALUE_STYLE, no_wrap=True)
 
         # The 'Authentication host'
-        kc_host = Text(
-            f"{self.environment.keycloak_hostname}", style=_KEY_VALUE_STYLE
-        )
+        kc_host = Text(f"{self.environment.keycloak_hostname}", style=_KEY_VALUE_STYLE)
 
         # The API lines are also dynamically styled.
         as_hostname: Optional[str] = self.environment.as_hostname

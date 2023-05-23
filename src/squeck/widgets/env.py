@@ -11,6 +11,7 @@ from rich import box
 from textual.widget import Widget
 from squonk2.dm_api import DmApi, DmApiRv
 from squonk2.as_api import AsApi, AsApiRv
+from squonk2.ui_api import UiApi, UiApiRv
 from squonk2.environment import Environment
 
 from squeck import common
@@ -21,6 +22,8 @@ _KEY_VALUE_STYLE: Style = Style(color="bright_white")
 _VALUE_ERROR_STYLE: Style = Style(
     color="bright_yellow", bgcolor="bright_red", bold=True
 )
+
+_NO_RESPONSE_TEXT: str = "- NO RESPONSE -"
 
 
 class EnvWidget(Widget):  # type: ignore
@@ -42,6 +45,10 @@ class EnvWidget(Widget):  # type: ignore
         if self.environment.dm_api:
             self.dm_api = DmApi()
             self.dm_api.set_api_url(self.environment.dm_api, verify_ssl_cert=False)
+        self.ui_api: Optional[UiApi] = None
+        if self.environment.ui_api:
+            self.ui_api = UiApi()
+            self.ui_api.set_api_url(self.environment.ui_api, verify_ssl_cert=False)
 
         self.panel_style: Style = Style(color="grey54", bgcolor="black")
 
@@ -78,7 +85,7 @@ class EnvWidget(Widget):  # type: ignore
             pass
 
         # Get the version of the DM API and the AS API
-        as_api_version: str = "- NO RESPONSE -"
+        as_api_version: str = _NO_RESPONSE_TEXT
         as_api_version_style: Style = _VALUE_ERROR_STYLE
         if self.as_api:
             as_ret_val: AsApiRv = self.as_api.get_version()
@@ -87,7 +94,7 @@ class EnvWidget(Widget):  # type: ignore
                 as_api_version_style = _KEY_VALUE_STYLE
         as_api_version_value: Text = Text(as_api_version, style=as_api_version_style)
 
-        dm_api_version: str = "- NO RESPONSE -"
+        dm_api_version: str = _NO_RESPONSE_TEXT
         dm_api_version_style: Style = _VALUE_ERROR_STYLE
         if self.dm_api:
             dm_ret_val: DmApiRv = self.dm_api.get_version()
@@ -95,6 +102,15 @@ class EnvWidget(Widget):  # type: ignore
                 dm_api_version = f"{dm_ret_val.msg['version']}"
                 dm_api_version_style = _KEY_VALUE_STYLE
         dm_api_version_value: Text = Text(dm_api_version, style=dm_api_version_style)
+
+        ui_api_version: str = _NO_RESPONSE_TEXT
+        ui_api_version_style: Style = _VALUE_ERROR_STYLE
+        if self.ui_api:
+            ui_ret_val: UiApiRv = self.ui_api.get_version()
+            if ui_ret_val.success:
+                ui_api_version = f"{ui_ret_val.msg['text']}"
+                ui_api_version_style = _KEY_VALUE_STYLE
+        ui_api_version_value: Text = Text(ui_api_version, style=ui_api_version_style)
 
         # Information is presented in a table.
         table: Table = Table(
@@ -129,7 +145,15 @@ class EnvWidget(Widget):  # type: ignore
         else:
             dm_hostname_text = Text("Undefined", style=_VALUE_ERROR_STYLE)
 
-        ui_hostname: Optional[str] = None
+        ui_hostname: Optional[str] = self.environment.ui_hostname
+        if ui_hostname:
+            ui_hostname_text: Text = Text(ui_hostname + " ", style=_KEY_VALUE_STYLE)
+            if ui_api_version == _NO_RESPONSE_TEXT:
+                ui_hostname_text.append(common.CROSS)
+            else:
+                ui_hostname_text.append(common.TICK)
+        else:
+            ui_hostname_text = Text("Undefined", style=_VALUE_ERROR_STYLE)
 
         # 7 Lines minimum
         table_height: int = 9
@@ -150,8 +174,8 @@ class EnvWidget(Widget):  # type: ignore
             table.add_row("V", "-")
         # Add a UI hostname if it's been defined
         if ui_hostname:
-            table.add_row("UI", "TBD")
-            table.add_row("v", "TBD")
+            table.add_row("UI", ui_hostname_text)
+            table.add_row("v", ui_api_version_value)
         else:
             table.add_row("UI", "-")
             table.add_row("V", "-")

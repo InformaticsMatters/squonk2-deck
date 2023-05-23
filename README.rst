@@ -8,7 +8,9 @@ Squonk2 Deck
    :alt: PyPI
 .. image:: https://img.shields.io/github/license/informaticsmatters/squonk2-deck
    :alt: GitHub
-.. image:: https://img.shields.io/github/workflow/status/informaticsmatters/squonk2-deck/build
+.. image:: https://img.shields.io/github/actions/workflow/status/informaticsmatters/squonk2-deck/build.yaml?label=build%20workflow
+   :alt: GitHub Workflow Status
+.. image:: https://img.shields.io/github/actions/workflow/status/informaticsmatters/squonk2-deck/publish.yaml?label=publish%20workflow
    :alt: GitHub Workflow Status
 
 **Squeck** (Squonk2 Deck) is s Textual-UI (TUI) for the

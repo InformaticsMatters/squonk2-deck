@@ -35,13 +35,13 @@ class EnvWidget(Widget):  # type: ignore
         self.environment = Environment(environment_name)
 
         self.as_api: Optional[AsApi] = None
-        if self.environment.as_api():
+        if self.environment.as_api:
             self.as_api = AsApi()
-            self.as_api.set_api_url(self.environment.as_api(), verify_ssl_cert=False)
+            self.as_api.set_api_url(self.environment.as_api, verify_ssl_cert=False)
         self.dm_api: Optional[AsApi] = None
-        if self.environment.dm_api():
+        if self.environment.dm_api:
             self.dm_api = DmApi()
-            self.dm_api.set_api_url(self.environment.dm_api(), verify_ssl_cert=False)
+            self.dm_api.set_api_url(self.environment.dm_api, verify_ssl_cert=False)
 
         self.panel_style: Style = Style(color="grey54", bgcolor="black")
 
@@ -107,11 +107,11 @@ class EnvWidget(Widget):  # type: ignore
 
         # The 'Authentication host'
         kc_host = Text(
-            f"{self.environment.keycloak_hostname()}", style=_KEY_VALUE_STYLE
+            f"{self.environment.keycloak_hostname}", style=_KEY_VALUE_STYLE
         )
 
         # The API lines are also dynamically styled.
-        as_hostname: Optional[str] = self.environment.as_hostname()
+        as_hostname: Optional[str] = self.environment.as_hostname
         if as_hostname:
             as_hostname_text: Text = Text(as_hostname + " ", style=_KEY_VALUE_STYLE)
             if self.as_access_token:
@@ -121,7 +121,7 @@ class EnvWidget(Widget):  # type: ignore
         else:
             as_hostname_text = Text("Undefined", style=_VALUE_ERROR_STYLE)
 
-        dm_hostname: Optional[str] = self.environment.dm_hostname()
+        dm_hostname: Optional[str] = self.environment.dm_hostname
         if dm_hostname:
             dm_hostname_text: Text = Text(dm_hostname + " ", style=_KEY_VALUE_STYLE)
             if self.dm_access_token:

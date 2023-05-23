@@ -16,14 +16,14 @@ class AccessToken:
         This returns None on error or if the client ID is not defined.
         """
         assert env
-        if not env.keycloak_as_client_id():
+        if not env.keycloak_as_client_id:
             return None
         access_token: Optional[str] = Auth.get_access_token(
-            keycloak_url=env.keycloak_url(),
-            keycloak_realm=env.keycloak_realm(),
-            keycloak_client_id=env.keycloak_as_client_id(),
-            username=env.admin_user(),
-            password=env.admin_password(),
+            keycloak_url=env.keycloak_url,
+            keycloak_realm=env.keycloak_realm,
+            keycloak_client_id=env.keycloak_as_client_id,
+            username=env.admin_user,
+            password=env.admin_password,
             prior_token=prior_token,
             timeout_s=2,
         )
@@ -36,14 +36,14 @@ class AccessToken:
         """Returns a token for the DM API
         or None if a token could not be obtained."""
         assert env
-        if not env.keycloak_dm_client_id():
+        if not env.keycloak_dm_client_id:
             return None
         access_token: Optional[str] = Auth.get_access_token(
-            keycloak_url=env.keycloak_url(),
-            keycloak_realm=env.keycloak_realm(),
-            keycloak_client_id=env.keycloak_dm_client_id(),
-            username=env.admin_user(),
-            password=env.admin_password(),
+            keycloak_url=env.keycloak_url,
+            keycloak_realm=env.keycloak_realm,
+            keycloak_client_id=env.keycloak_dm_client_id,
+            username=env.admin_user,
+            password=env.admin_password,
             prior_token=prior_token,
         )
         return access_token

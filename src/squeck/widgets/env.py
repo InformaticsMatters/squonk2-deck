@@ -24,6 +24,7 @@ _VALUE_ERROR_STYLE: Style = Style(
 )
 
 _NO_RESPONSE_TEXT: str = "- NO RESPONSE -"
+_UI_HOSTNAME_POSTFIX: str = "/data-manager-ui"
 
 
 class EnvWidget(Widget):  # type: ignore
@@ -147,7 +148,9 @@ class EnvWidget(Widget):  # type: ignore
 
         ui_hostname: Optional[str] = self.environment.ui_hostname
         if ui_hostname:
-            ui_hostname_text: Text = Text(ui_hostname + " ", style=_KEY_VALUE_STYLE)
+            ui_hostname_text: Text = Text(
+                ui_hostname + _UI_HOSTNAME_POSTFIX + " ", style=_KEY_VALUE_STYLE
+            )
             if ui_api_version == _NO_RESPONSE_TEXT:
                 ui_hostname_text.append(common.CROSS)
             else:

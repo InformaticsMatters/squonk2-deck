@@ -23,6 +23,12 @@ summary information for multiple Squonk2 environments and uses Will McGugan's
 `textual`_ framework to provide the user with a simple,
 text-based user interface modelled on the popular `k9s`_ Kubernetes monitor.
 
+It displays a summary of the environments, where: -
+
+- A green tick indicates that the authenticator service has issued a token for the service
+- The service version is displayed for those that are running
+- A **NO RESPONSE** banner is displayed for services that are not responding
+
 .. _k9s: https://k9scli.io
 .. _squonk2-python-client: https://github.com/InformaticsMatters/squonk2-python-client
 .. _textual: https://github.com/Textualize/textual

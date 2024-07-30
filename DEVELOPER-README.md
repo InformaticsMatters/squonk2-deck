@@ -41,7 +41,7 @@ To build the package distribution manually run: -
 
 To install the local build, without needing to publish the package run: -
 
-    pip install dist/im-squeck-*.tar.gz
+    pip install dist/im_squeck-*.tar.gz
 
 And to uninstall...
 

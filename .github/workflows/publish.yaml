@@ -25,7 +25,7 @@ on:
     - '**'
 
 jobs:
-  build-and-publish:
+  build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -44,8 +44,27 @@ jobs:
       run: |
         echo $GITHUB_REF_SLUG > src/squeck/VERSION
         uv build
+    - name: Store the distribution
+      uses: actions/upload-artifact@v5
+      with:
+        name: python-package-distribution
+        path: dist/
+
+  publish:
+    name: Publish to PyPI
+    needs:
+    - build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/xchem-hippo
+    permissions:
+      id-token: write
+    steps:
+    - name: Download distribution
+      uses: actions/download-artifact@v6
+      with:
+        name: python-package-distribution
+        path: dist/
     - name: Publish
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: ${{ secrets.PYPI_USERNAME }}
-        password: ${{ secrets.PYPI_TOKEN }}

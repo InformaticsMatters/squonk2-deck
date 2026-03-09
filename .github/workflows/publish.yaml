@@ -29,21 +29,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
     - name: Inject slug/short variables
-      uses: rlespinasse/github-slug-action@v3.x
+      uses: rlespinasse/github-slug-action@v5
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
-    - name: Install dependencies
+        python-version: '3.12'
+    - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install --upgrade build
+        python -m pip install -r build-requirements.txt
     - name: Build
       run: |
         echo $GITHUB_REF_SLUG > src/squeck/VERSION
-        python -m build --sdist --wheel --outdir dist/
+        uv build
     - name: Publish
       uses: pypa/gh-action-pypi-publish@release/v1
       with:

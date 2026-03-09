@@ -32,9 +32,8 @@ to PyPI automatically from the main branch using GitHub Actions.
 
 To build the package distribution manually run: -
 
-    python -m pip install --upgrade build
     rm -rf dist/*
-    python -m build --sdist --wheel --outdir dist/
+    uv build
 
 >   Because you're building outside the CI process the version number of
     the package will be fixed at 1.0.0. DO NOT change this behaviour.

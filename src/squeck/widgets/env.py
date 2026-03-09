@@ -1,5 +1,5 @@
-"""A textual widget used to display environment information.
-"""
+"""A textual widget used to display environment information."""
+
 import random
 from typing import Optional
 
@@ -8,7 +8,8 @@ from rich.style import Style
 from rich.table import Table
 from rich.text import Text
 from rich import box
-from textual.widget import Widget
+from textual.app import RenderResult
+from textual.widgets import Static
 from squonk2.dm_api import DmApi, DmApiRv
 from squonk2.as_api import AsApi, AsApiRv
 from squonk2.ui_api import UiApi, UiApiRv
@@ -27,7 +28,7 @@ _NO_RESPONSE_TEXT: str = "- NO RESPONSE -"
 _UI_HOSTNAME_POSTFIX: str = "/data-manager-ui"
 
 
-class EnvWidget(Widget):  # type: ignore
+class EnvWidget(Static):  # type: ignore
     """Displays the environment."""
 
     as_access_token: Optional[str] = None
@@ -42,7 +43,7 @@ class EnvWidget(Widget):  # type: ignore
         if self.environment.as_api:
             self.as_api = AsApi()
             self.as_api.set_api_url(self.environment.as_api, verify_ssl_cert=False)
-        self.dm_api: Optional[AsApi] = None
+        self.dm_api: Optional[DmApi] = None
         if self.environment.dm_api:
             self.dm_api = DmApi()
             self.dm_api.set_api_url(self.environment.dm_api, verify_ssl_cert=False)
@@ -61,7 +62,7 @@ class EnvWidget(Widget):  # type: ignore
         interval: int = random.randint(10, 30)
         self.set_interval(interval, self.refresh)
 
-    def render(self) -> Panel:
+    def render(self) -> RenderResult:
         """Render the widget."""
 
         # Set the URL for this environment.
@@ -73,7 +74,7 @@ class EnvWidget(Widget):  # type: ignore
             )
         except KeyboardInterrupt as k_i:
             raise k_i
-        except:  # pylint: disable=bare-except
+        except Exception:
             pass
         self.dm_access_token = None
         try:
@@ -82,7 +83,7 @@ class EnvWidget(Widget):  # type: ignore
             )
         except KeyboardInterrupt as k_i:
             raise k_i
-        except:  # pylint: disable=bare-except
+        except Exception:
             pass
 
         # Get the version of the DM API and the AS API
@@ -128,7 +129,7 @@ class EnvWidget(Widget):  # type: ignore
         # The API lines are also dynamically styled.
         as_hostname: Optional[str] = self.environment.as_hostname
         if as_hostname:
-            as_hostname_text: Text = Text(as_hostname + " ", style=_KEY_VALUE_STYLE)
+            as_hostname_text: Text = Text(f"{as_hostname} ", style=_KEY_VALUE_STYLE)
             if self.as_access_token:
                 as_hostname_text.append(common.TICK)
             else:
@@ -138,7 +139,7 @@ class EnvWidget(Widget):  # type: ignore
 
         dm_hostname: Optional[str] = self.environment.dm_hostname
         if dm_hostname:
-            dm_hostname_text: Text = Text(dm_hostname + " ", style=_KEY_VALUE_STYLE)
+            dm_hostname_text: Text = Text(f"{dm_hostname} ", style=_KEY_VALUE_STYLE)
             if self.dm_access_token:
                 dm_hostname_text.append(common.TICK)
             else:

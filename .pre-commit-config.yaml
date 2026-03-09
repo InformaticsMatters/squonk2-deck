@@ -1,5 +1,5 @@
 ---
-minimum_pre_commit_version: 2.20.0
+minimum_pre_commit_version: 3.8.0
 exclude: ^src/squeck/VERSION
 
 repos:
@@ -9,7 +9,7 @@ repos:
 
 # Conventional Commit message checker (commitizen)
 - repo: https://github.com/commitizen-tools/commitizen
-  rev: v2.29.3
+  rev: v4.13.8
   hooks:
   - id: commitizen
     stages:
@@ -20,7 +20,7 @@ repos:
 
 # Standard pre-commit rules
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.3.0
+  rev: v6.0.0
   hooks:
   - id: check-case-conflict
   - id: check-docstring-first
@@ -31,26 +31,30 @@ repos:
   - id: trailing-whitespace
     args:
     - --markdown-linebreak-ext=md
+
 # Black (uncompromising) Python code formatter
 - repo: https://github.com/psf/black
-  rev: 22.6.0
+  rev: 26.3.0
   hooks:
   - id: black
     args:
     - --target-version
     - py39
+
+# Ruff
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.15.2
+  hooks:
+  - id: ruff-check
+    args:
+    - --fix
+
 # MyPy
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v0.971
+  rev: v1.19.1
   hooks:
   - id: mypy
     files: ^src
     args:
     - --install-types
     - --non-interactive
-# Pylint
-- repo: https://github.com/pycqa/pylint
-  rev: v2.14.5
-  hooks:
-  - id: pylint
-    files: ^src

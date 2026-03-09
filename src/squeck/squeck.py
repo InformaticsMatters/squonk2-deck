@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 """The entry module for the Squeck application."""
+
 import argparse
 import os
 import sys
 from typing import Optional
 
-from rich.style import Style
-from textual.app import App
-from textual.widgets import Header
 from squonk2.environment import Environment
+from textual.app import App, ComposeResult
+from textual.containers import Vertical
+from textual.widgets import Header, Footer
 
 from squeck.widgets.env import EnvWidget
 
@@ -26,24 +27,18 @@ with open(
 class Squeck(App):  # type: ignore
     """An example of a very simple Textual App"""
 
-    async def on_load(self) -> None:
-        """initialisation - prior to application starting - bind keys."""
-        await self.bind("Q", "quit", "Quit")
-
-    async def on_mount(self) -> None:
+    def compose(self) -> ComposeResult:
         """Widget initialisation - application start"""
 
-        # An informative header
-        await self.view.dock(
-            Header(
-                style=Style(color="bright_white", bgcolor="red3", bold=True),
-                clock=False,
-            ),
-            edge="top",
-        )
+        yield Header()
+        with Vertical():
+            for name in Environment.load():
+                yield EnvWidget(name)
+        yield Footer()
 
-        envs = (EnvWidget(name) for name in Environment.load())
-        await self.view.dock(*envs, edge="top")
+    def on_mount(self) -> None:
+        """App specialisation."""
+        self.sub_title = f"v{__version__}"  # pylint: attribute-defined-outside-init
 
 
 def main() -> int:
@@ -74,7 +69,8 @@ def main() -> int:
         sys.stderr = open(os.devnull, "w", encoding="utf-8")
 
     # Run our app class
-    Squeck.run(title=f"squeck v{__version__}", log=_LOG)
+    app = Squeck()
+    app.run()
 
     # If we get here, return 0 to indicate success
     # after restoring stderr.

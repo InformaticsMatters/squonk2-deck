@@ -1,5 +1,5 @@
-"""Gets AS and DM access tokens.
-"""
+"""Gets AS and DM access tokens."""
+
 from typing import Optional
 from squonk2.auth import Auth
 from squonk2.environment import Environment

@@ -1,5 +1,5 @@
-"""Common material (constants etc.).
-"""
+"""Common material (constants etc.)."""
+
 from rich.style import Style
 from rich.text import Text
 import textual

@@ -74,7 +74,7 @@ class EnvWidget(Static):  # type: ignore
             )
         except KeyboardInterrupt as k_i:
             raise k_i
-        except:  # pylint: disable=bare-except
+        except Exception:
             pass
         self.dm_access_token = None
         try:
@@ -83,7 +83,7 @@ class EnvWidget(Static):  # type: ignore
             )
         except KeyboardInterrupt as k_i:
             raise k_i
-        except:  # pylint: disable=bare-except
+        except Exception:
             pass
 
         # Get the version of the DM API and the AS API

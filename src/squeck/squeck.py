@@ -36,6 +36,10 @@ class Squeck(App):  # type: ignore
                 yield EnvWidget(name)
         yield Footer()
 
+    def on_mount(self) -> None:
+        """App specialisation."""
+        self.sub_title = f"v{__version__}"  # pylint: attribute-defined-outside-init
+
 
 def main() -> int:
     """Application entry point, called when the module is executed."""

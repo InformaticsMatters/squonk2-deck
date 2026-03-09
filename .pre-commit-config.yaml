@@ -31,6 +31,7 @@ repos:
   - id: trailing-whitespace
     args:
     - --markdown-linebreak-ext=md
+
 # Black (uncompromising) Python code formatter
 - repo: https://github.com/psf/black
   rev: 26.3.0
@@ -39,6 +40,15 @@ repos:
     args:
     - --target-version
     - py39
+
+# Ruff
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.15.2
+  hooks:
+  - id: ruff-check
+    args:
+    - --fix
+
 # MyPy
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.19.1
@@ -48,9 +58,3 @@ repos:
     args:
     - --install-types
     - --non-interactive
-# Pylint
-- repo: https://github.com/pycqa/pylint
-  rev: v4.0.5
-  hooks:
-  - id: pylint
-    files: ^src

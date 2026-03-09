@@ -9,7 +9,7 @@ repos:
 
 # Conventional Commit message checker (commitizen)
 - repo: https://github.com/commitizen-tools/commitizen
-  rev: v2.29.3
+  rev: v4.13.8
   hooks:
   - id: commitizen
     stages:

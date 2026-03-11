@@ -1,7 +1,6 @@
 """A textual widget used to display environment information."""
 
 import random
-from typing import Optional
 
 from rich.panel import Panel
 from rich.style import Style
@@ -28,26 +27,26 @@ _NO_RESPONSE_TEXT: str = "- NO RESPONSE -"
 _UI_HOSTNAME_POSTFIX: str = "/data-manager-ui"
 
 
-class EnvWidget(Static):  # type: ignore
+class EnvWidget(Static):
     """Displays the environment."""
 
-    as_access_token: Optional[str] = None
-    dm_access_token: Optional[str] = None
+    as_access_token: str | None = None
+    dm_access_token: str | None = None
 
     def __init__(self, environment_name: str) -> None:
         super().__init__()
         self.environment_name = environment_name
         self.environment = Environment(environment_name)
 
-        self.as_api: Optional[AsApi] = None
+        self.as_api: AsApi | None = None
         if self.environment.as_api:
             self.as_api = AsApi()
             self.as_api.set_api_url(self.environment.as_api, verify_ssl_cert=False)
-        self.dm_api: Optional[DmApi] = None
+        self.dm_api: DmApi | None = None
         if self.environment.dm_api:
             self.dm_api = DmApi()
             self.dm_api.set_api_url(self.environment.dm_api, verify_ssl_cert=False)
-        self.ui_api: Optional[UiApi] = None
+        self.ui_api: UiApi | None = None
         if self.environment.ui_api:
             self.ui_api = UiApi()
             self.ui_api.set_api_url(self.environment.ui_api, verify_ssl_cert=False)
@@ -127,7 +126,7 @@ class EnvWidget(Static):  # type: ignore
         kc_host = Text(f"{self.environment.keycloak_hostname}", style=_KEY_VALUE_STYLE)
 
         # The API lines are also dynamically styled.
-        as_hostname: Optional[str] = self.environment.as_hostname
+        as_hostname: str | None = self.environment.as_hostname
         if as_hostname:
             as_hostname_text: Text = Text(f"{as_hostname} ", style=_KEY_VALUE_STYLE)
             if self.as_access_token:
@@ -137,7 +136,7 @@ class EnvWidget(Static):  # type: ignore
         else:
             as_hostname_text = Text("Undefined", style=_VALUE_ERROR_STYLE)
 
-        dm_hostname: Optional[str] = self.environment.dm_hostname
+        dm_hostname: str | None = self.environment.dm_hostname
         if dm_hostname:
             dm_hostname_text: Text = Text(f"{dm_hostname} ", style=_KEY_VALUE_STYLE)
             if self.dm_access_token:
@@ -147,7 +146,7 @@ class EnvWidget(Static):  # type: ignore
         else:
             dm_hostname_text = Text("Undefined", style=_VALUE_ERROR_STYLE)
 
-        ui_hostname: Optional[str] = self.environment.ui_hostname
+        ui_hostname: str | None = self.environment.ui_hostname
         if ui_hostname:
             ui_hostname_text: Text = Text(
                 ui_hostname + _UI_HOSTNAME_POSTFIX + " ", style=_KEY_VALUE_STYLE

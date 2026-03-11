@@ -4,7 +4,7 @@
 import argparse
 import os
 import sys
-from typing import Optional
+from typing import Any
 
 from squonk2.environment import Environment
 from textual.app import App, ComposeResult
@@ -15,7 +15,7 @@ from squeck.widgets.env import EnvWidget
 
 # Users set SQUONK2_LOGFILE to enable logging
 # e.g. "export SQUONK2_LOGFILE=./squad.log"
-_LOG: Optional[str] = os.environ.get("SQUONK2_LOGFILE")
+_LOG: str | None = os.environ.get("SQUONK2_LOGFILE")
 
 # Read the version file
 with open(
@@ -24,7 +24,7 @@ with open(
     __version__ = f.read().strip()
 
 
-class Squeck(App):  # type: ignore
+class Squeck(App[Any]):
     """An example of a very simple Textual App"""
 
     def compose(self) -> ComposeResult:
@@ -38,7 +38,7 @@ class Squeck(App):  # type: ignore
 
     def on_mount(self) -> None:
         """App specialisation."""
-        self.sub_title = f"v{__version__}"  # pylint: attribute-defined-outside-init
+        self.sub_title = f"v{__version__}"
 
 
 def main() -> int:

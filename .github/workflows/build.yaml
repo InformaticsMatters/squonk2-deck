@@ -45,6 +45,5 @@ jobs:
     - name: Static analysis
       run: |
         uv run pre-commit run --all-files
-        uv run pyroma .
     - name: Build
       run: uv build

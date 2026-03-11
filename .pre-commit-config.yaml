@@ -32,6 +32,12 @@ repos:
     args:
     - --markdown-linebreak-ext=md
 
+# Checking packaging
+- repo: https://github.com/regebro/pyroma
+  rev: 5.0.1
+  hooks:
+  - id: pyroma
+
 # Black (uncompromising) Python code formatter
 - repo: https://github.com/psf/black
   rev: 26.3.0

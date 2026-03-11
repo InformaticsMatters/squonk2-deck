@@ -7,6 +7,7 @@ The project uses: -
   upstream repository
 - [Commitizen] to enforce a [Conventional Commit] commit message format
 - [Black] as a code formatter
+- [uv] for project management
 
 You **MUST** comply with these choices in order to  contribute to the project.
 
@@ -14,14 +15,14 @@ To get started review the pre-commit utility and the conventional commit style
 and then setup your local clone by following the **Installation** and
 **Quick Start** sections: -
 
-    pip install --upgrade pip
-    pip install -r build-requirements.txt
-    pre-commit install -t commit-msg -t pre-commit
+    uv venv
+    uv sync --group dev
+    uv run pre-commit install -t commit-msg -t pre-commit
 
 Now the project's rules will run on every commit, and you can check the
 current health of your clone with: -
 
-    pre-commit run --all-files
+    uv run pre-commit run --all-files
 
 Create a virtual environment if you're going to develop code.
 
@@ -64,3 +65,4 @@ You can run the unit tests with: -
 [pre-commit]: https://pre-commit.com
 [pytest]: https://docs.pytest.org/en/7.1.x/contents.html
 [python packaging]: https://packaging.python.org/en/latest/tutorials/packaging-projects/
+[uv]: https://docs.astral.sh/uv/

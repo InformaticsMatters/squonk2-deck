@@ -1,5 +1,5 @@
 ---
-minimum_pre_commit_version: 3.8.0
+minimum_pre_commit_version: 4.5.0
 exclude: ^src/squeck/VERSION
 
 repos:
@@ -64,3 +64,5 @@ repos:
     args:
     - --install-types
     - --non-interactive
+    additional_dependencies:
+    - textual

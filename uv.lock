@@ -335,7 +335,7 @@ wheels = [
 
 [[package]]
 name = "im-squeck"
-version = "1.0.0"
+version = "0.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "im-squonk2-client" },
